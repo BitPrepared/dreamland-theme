@@ -7,7 +7,21 @@
  * @since tempera 0.5
  */
 
-get_header();?>
+get_header();
+
+require_once("regioni_e_zone/regioni_zone_utils.php");
+
+?>
+
+		<?php if(isset($_GET['iscriviti'])): ?>
+		<script type="text/javascript">
+			alert("Iscrizione!");
+			<?php 
+				wp_redirect('http://ansa.it'); 
+				exit(); 
+			?>
+		</script>
+		<?php endif; ?>
 
 		<section id="container" class="<?php echo tempera_get_layout_class(); ?>">
 			<div id="content" role="main">
@@ -31,12 +45,11 @@ get_header();?>
 						.limite-sfida {
 							font-size:14pt;
 							color:green;
-							margin:5px;
 							padding: 5px 0 5px 0;
+							display: inline;
 						}
 
 						.icons {
-							border: 2px solid;
 							float:left;
 						}
 
@@ -48,15 +61,23 @@ get_header();?>
 							font-size: 20pt;
 							padding: 5px;
 						}
+						.locus {
+							color: blue;
+						}
 						</style>
+						<div>
 						<?php if ($r == 'CM_NAZ') : ?>
 							<div class="limite-sfida" >SFIDA APERTA A TUTTI!</div>
 						<?php else : ?>
-							<div class="limite-sfida" >Sfida limitata alla regione <?php echo($r); ?></div>
+							<div class="limite-sfida" >Sfida limitata alla regione 
+							<span class="locus"><?php echo(get_nome_regione_by_code($r)); ?></span></div>
 							<?php if ($z != 'A1') : ?>
-								<div class="limite-sfida" >e alla zona <?php echo($z); ?></div>
+								<div class="limite-sfida" >e alla zona 
+								<span class="locus"><?php echo(get_nome_zona_by_code($z)); ?></span>
+								</div>
 							<?php endif; ?>
 						<?php endif; ?>
+						</div>
 						<?php 
 							$l = array('Dal ' => '_start', 'Al ' => '_end');
 							$p = array('_year', '_month', '_day', '_hour', '_minute');
@@ -160,9 +181,19 @@ get_header();?>
 
 						?>
 						</div>
+						<?php if(/* is_alive() && is_for_me()*/ True): ?>
 						<div class="iscrizione-button">
-							<a>ISCRITIVITI</a>
+							<a href="?iscriviti">ISCRIVITI</a>
 						</div>
+						<?php else: ?>
+							<?php 
+							$is_iscritto = get_user_meta($user, '_iscrizioni');
+							if($is_iscritto && in_array($post->ID, $is_iscritto)){ ?>
+							<div class="iscrizione-button">
+								ISCRITTO
+							</div>
+							<?php } ?>
+		 				<?php endif; ?>
 						<!-- END DREAMLAND SPECIFIC -->
 
 					<div class="entry-content">

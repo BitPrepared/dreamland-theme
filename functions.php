@@ -1,5 +1,7 @@
 <?php
 
+// require_once("regioni_e_zone/regione_zone_utils.php");
+
 function child_override(){
 	// override
 	remove_action('cryout_before_content_hook' , 'tempera_above_widget');
@@ -15,8 +17,66 @@ function my_tempera_above_widget() {
 	</ul>
 <?php } }
 
+// API: sfida_permalink?iscritto&secret=XXXX
+function iscrizione_sfida_completata(){
+	if(is_single() && get_post_type() == 'sfida_event' && isset($_GET['iscritto'])){
+		if(!isset($_GET['secret'])){
+			return;
+		}
+		
+		$s = filter_var( $_GET['secret'], FILTER_STRING);
+		
+		if($s !== $sfide_api_secret){
+			return;
+		}
 
+		// salva iscrizione completata
+		add_user_meta(wp_get_current_user_ID(), '_iscrizioni', get_the_ID(), False);
 
+	}
+}
+add_action('wp_head', 'iscrizione_sfida_completata');
 
+// API: sfida_permalink?iscriviti
+function richiedi_iscrizione_sfida(){
+	if(is_single() && get_post_type() === 'sfida_event' && isset($_GET['iscriviti'])){
+		
+		if(!is_user_logged_in()){
+			wp_redirect("wp-login.php");
+			exit();
+		}
+
+		$user = wp_get_current_user();
+		
+		if(! $user instanceof WP_User){
+			wp_redirect("wp-login.php");
+			exit();
+		}
+
+		// login_portal( $user->user_login, $user );
+		
+		$post = get_post();
+
+		// controlla se non è già iscritto
+		$is_iscritto = get_user_meta($user, '_iscrizioni');
+		if($is_iscritto && in_array($post->ID, $is_iscritto)){
+			wp_redirect(get_permalink($post->ID));
+			exit();
+		}
+
+		$u_p = get_user_meta($user, 'punteggio');
+
+		$_SESSION['sfide'] = array(
+			'sfida_url' => post_permalink($post->ID),
+			'sfida_id' => $post->ID,
+			'missione' => False, // todo
+			'punteggio_attuale' => ($u_p) ? reset($u_p) : $u_p
+		);
+
+		wp_redirect('http://returntodreamland.agesci.org/portal/sfide/iscrizione/' + $post->ID);
+		exit();
+	}
+}
+add_action('wp_head', 'richiedi_iscrizione_sfida');
 
 ?>
