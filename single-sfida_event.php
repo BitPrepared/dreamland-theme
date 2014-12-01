@@ -71,7 +71,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 						<?php else : ?>
 							<div class="limite-sfida" >Sfida limitata alla regione 
 							<span class="locus"><?php echo(get_nome_regione_by_code($r)); ?></span></div>
-							<?php if ($z != 'A1') : ?>
+							<?php if ($z != 'A1' && $z != '-- TUTTE LE ZONE --') : ?>
 								<div class="limite-sfida" >e alla zona 
 								<span class="locus"><?php echo(get_nome_zona_by_code($z)); ?></span>
 								</div>
@@ -181,13 +181,13 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 
 						?>
 						</div>
-						<?php if(/* is_alive() && is_for_me()*/ True): ?>
+						<?php if(/* is_alive() && */ is_sfida_for_me($post)): ?>
 						<div class="iscrizione-button">
 							<a href="?iscriviti">ISCRIVITI</a>
 						</div>
 						<?php else: ?>
 							<?php 
-							$is_iscritto = get_user_meta($user, '_iscrizioni');
+							$is_iscritto = get_user_meta(get_current_user_id(), '_iscrizioni');
 							if($is_iscritto && in_array($post->ID, $is_iscritto)){ ?>
 							<div class="iscrizione-button">
 								ISCRITTO

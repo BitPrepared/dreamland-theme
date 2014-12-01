@@ -57,10 +57,15 @@ function richiedi_iscrizione_sfida(){
 		
 		$post = get_post();
 
+		if(!is_sfida_for_me($post)){
+			wp_die("Non puoi partecipare a questa sfida", "Sfida a partecipazione limitata", array('back_link' => True));
+			return;
+		}
+
 		// controlla se non è già iscritto
 		$is_iscritto = get_user_meta($user, '_iscrizioni');
 		if($is_iscritto && in_array($post->ID, $is_iscritto)){
-			wp_redirect(get_permalink($post->ID));
+			wp_die("Sei già iscritto a questa sfida", "Sfida a partecipazione limitata", array('back_link' => True));
 			exit();
 		}
 
@@ -78,5 +83,13 @@ function richiedi_iscrizione_sfida(){
 	}
 }
 add_action('wp_head', 'richiedi_iscrizione_sfida');
+
+function no_nopaging($query) {
+	if (is_post_type_archive('sfida_event')) {
+		$query->set('nopaging', 1);
+	}
+}
+
+add_action('parse_query', 'no_nopaging');
 
 ?>
