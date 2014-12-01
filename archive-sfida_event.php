@@ -12,7 +12,11 @@
  * @since Tempera 1.0
  */
 
-get_header(); ?>
+get_header(); 
+
+require_once("regioni_e_zone/regioni_zone_utils.php");
+
+?>
 
 		<section id="container" class="<?php echo tempera_get_layout_class(); ?>">
 			<div id="content" role="main">
@@ -36,7 +40,7 @@ get_header(); ?>
 							<?php _e( 'Le sfide pubblicate', 'tempera' ); ?>
 						<?php endif; ?>
 						<?php if(isset($filtro_regione)): ?>
-							<?php _e('per la regione ' . $filtro_regione); ?>
+							<?php _e('per la regione ' . get_nome_regione_by_code($filtro_regione)); ?>
 						<?php endif; ?>
 					</h1>
 				</header>
