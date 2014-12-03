@@ -2,6 +2,18 @@
 
 // require_once("regioni_e_zone/regione_zone_utils.php");
 
+if(!function_exists('_log')){
+  function _log( $message ) {
+    if( WP_DEBUG === true ){
+      if( is_array( $message ) || is_object( $message ) ){
+        error_log( print_r( $message, true ) );
+      } else {
+        error_log( $message );
+      }
+    }
+  }
+}
+
 function child_override(){
 	// override
 	remove_action('cryout_before_content_hook' , 'tempera_above_widget');
@@ -74,11 +86,16 @@ function richiedi_iscrizione_sfida(){
 		$_SESSION['sfide'] = array(
 			'sfida_url' => post_permalink($post->ID),
 			'sfida_id' => $post->ID,
-			'missione' => False, // todo
-			'punteggio_attuale' => ($u_p) ? reset($u_p) : $u_p
+			'punteggio_attuale' => ($u_p) ? reset($u_p) : $u_p //che sintassi e'??
 		);
 
-		wp_redirect('http://returntodreamland.agesci.org/portal/sfide/iscrizione/' + $post->ID);
+		_log('Richiesta iscrizione per evento '.$post->ID.' da parte dello user '.$user->ID);
+
+		$url = site_url('../portal/sfide/iscrizione/'. $post->ID);
+
+		_log('Redirect to '.$url);
+
+		wp_redirect($url);
 		exit();
 	}
 }
