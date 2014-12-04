@@ -82,11 +82,17 @@ function richiedi_iscrizione_sfida(){
 		}
 
 		$u_p = get_user_meta($user, 'punteggio');
-
+		$ncomponenti_p = get_user_meta($user, 'numerocomponenti');
+		$nspecialita_p = get_user_meta($user, 'nspecialita');
+		$nbrevetti_p = get_user_meta($user, 'nbrevetti');
+		
 		$_SESSION['sfide'] = array(
 			'sfida_url' => post_permalink($post->ID),
 			'sfida_id' => $post->ID,
-			'punteggio_attuale' => ($u_p) ? reset($u_p) : $u_p //che sintassi e'??
+			'punteggio_attuale' => ($u_p) ? reset($u_p) : $u_p,
+			'numero_componenti' => ($ncomponenti_p) ? reset($ncomponenti_p) : $ncomponenti_p,
+			'numero_specialita' => ($nspecialita_p) ? reset($nspecialita_p) : $nspecialita_p,
+			'numero_brevetti' => ($nbrevetti_p) ? reset($nbrevetti_p) : $nbrevetti_p
 		);
 
 		_log('Richiesta iscrizione per evento '.$post->ID.' da parte dello user '.$user->ID);
