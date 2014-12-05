@@ -12,7 +12,7 @@
  * @since Tempera 1.0
  */
 
-get_header(); 
+get_header();
 
 require_once("regioni_e_zone/regioni_zone_utils.php");
 
