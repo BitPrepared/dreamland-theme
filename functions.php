@@ -115,16 +115,19 @@ function no_nopaging($query) {
 
 add_action('parse_query', 'no_nopaging');
 
-
-function custom_single_template($single_template) {
-    global $post;
-    if ($post->post_type == 'my_post_type') {
-        $single_template = dirname( __FILE__ ) . '/single-sfida_event.php';
-    }
-    return $single_template;
-}
-
-add_filter('single_template', 'custom_single_template');
+//// @see http://codex.wordpress.org/Template_Hierarchy
+//// @see http://codex.wordpress.org/images/9/96/wp-template-hierarchy.jpg
+//function custom_single_template($single_template) {
+//    global $post;
+//
+////    if ($post->post_type == 'my_post_type') {
+////        $single_template = dirname( __FILE__ ) . '/single-'.$post->post_type.'.php';
+////    }
+//
+//    return $single_template;
+//}
+//
+//add_filter('single_template', 'custom_single_template');
 
 
 ?>
