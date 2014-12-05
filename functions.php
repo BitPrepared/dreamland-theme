@@ -29,25 +29,25 @@ function my_tempera_above_widget() {
 	</ul>
 <?php } }
 
-// API: sfida_permalink?iscritto&secret=XXXX
-function iscrizione_sfida_completata(){
-	if(is_single() && get_post_type() == 'sfida_event' && isset($_GET['iscritto'])){
-		if(!isset($_GET['secret'])){
-			return;
-		}
-		
-		$s = filter_var( $_GET['secret'], FILTER_STRING);
-		
-		if($s !== $sfide_api_secret){
-			return;
-		}
-
-		// salva iscrizione completata
-		add_user_meta(wp_get_current_user_ID(), '_iscrizioni', get_the_ID(), False);
-
-	}
-}
-add_action('wp_head', 'iscrizione_sfida_completata');
+//// API: sfida_permalink?iscritto&secret=XXXX
+//function iscrizione_sfida_completata(){
+//	if(is_single() && get_post_type() == 'sfida_event' && isset($_GET['iscritto'])){
+//		if(!isset($_GET['secret'])){
+//			return;
+//		}
+//
+//		$s = filter_var( $_GET['secret'], FILTER_STRING);
+//
+//		if($s !== $sfide_api_secret){
+//			return;
+//		}
+//
+//		// salva iscrizione completata
+//		add_user_meta(wp_get_current_user_ID(), '_iscrizioni', get_the_ID(), False);
+//
+//	}
+//}
+//add_action('wp_head', 'iscrizione_sfida_completata');
 
 // API: sfida_permalink?iscriviti
 function richiedi_iscrizione_sfida(){
@@ -114,5 +114,17 @@ function no_nopaging($query) {
 }
 
 add_action('parse_query', 'no_nopaging');
+
+
+function custom_single_template($single_template) {
+    global $post;
+    if ($post->post_type == 'my_post_type') {
+        $single_template = dirname( __FILE__ ) . '/single-sfida_event.php';
+    }
+    return $single_template;
+}
+
+add_filter('single_template', 'custom_single_template');
+
 
 ?>
