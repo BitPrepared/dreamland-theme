@@ -58,12 +58,14 @@ function richiedi_iscrizione_sfida(){
 			exit();
 		}
 
-		$user = wp_get_current_user();
+		$user_id = get_current_user_id();
 		
-		if(! $user instanceof WP_User){
+		if($user_id == 0){
 			wp_redirect("wp-login.php");
 			exit();
 		}
+
+		$user = new WP_User($user_id);
 
 		// login_portal( $user->user_login, $user );
 		
@@ -75,20 +77,29 @@ function richiedi_iscrizione_sfida(){
 		}
 
 		// controlla se non è già iscritto
-		$is_iscritto = get_user_meta($user, '_iscrizioni');
+		$is_iscritto = get_user_meta($user_id, '_iscrizioni');
+
 		if($is_iscritto && in_array($post->ID, $is_iscritto)){
 			wp_die("Sei già iscritto a questa sfida", "Sfida a partecipazione limitata", array('back_link' => True));
 			exit();
 		}
 
-		$u_p = get_user_meta($user, 'punteggio');
-		$ncomponenti_p = get_user_meta($user, 'numerocomponenti');
-		$nspecialita_p = get_user_meta($user, 'nspecialita');
-		$nbrevetti_p = get_user_meta($user, 'nbrevetti');
+		$u_p = get_user_meta($user_id, 'punteggio');
+
+		$ncomponenti_p = get_user_meta($user_id, 'numerocomponenti');
+		$nspecialita_p = get_user_meta($user_id, 'nspecialita');
+		$nbrevetti_p = get_user_meta($user_id, 'nbrevetti');
 		
 		$_SESSION['sfide'] = array(
 			'sfida_url' => post_permalink($post->ID),
+			'sfida_titolo' => get_the_title($post->ID),
 			'sfida_id' => $post->ID,
+			
+
+			// COME LO DECRETO.... 
+			'sfidaspeciale' => true,
+
+
 			'punteggio_attuale' => ($u_p) ? reset($u_p) : $u_p,
 			'numero_componenti' => ($ncomponenti_p) ? reset($ncomponenti_p) : $ncomponenti_p,
 			'numero_specialita' => ($nspecialita_p) ? reset($nspecialita_p) : $nspecialita_p,
@@ -97,7 +108,7 @@ function richiedi_iscrizione_sfida(){
 
 		_log('Richiesta iscrizione per evento '.$post->ID.' da parte dello user '.$user->ID);
 
-		$url = site_url('../portal/sfide/iscrizione/'. $post->ID);
+		$url = site_url('../portal/api/sfide/iscrizione/'. $post->ID);
 
 		_log('Redirect to '.$url);
 
