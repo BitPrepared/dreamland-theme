@@ -181,18 +181,32 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 
 						?>
 						</div>
-						<?php if(/* is_alive() && */ is_sfida_for_me($post)): ?>
-						<div class="iscrizione-button">
-							<a href="?iscriviti">ISCRIVITI</a>
-						</div>
+						<?php 
+							$alive = is_sfida_alive($post);
+
+							if($alive && is_sfida_for_me($post)): 
+						?>
+							<div class="iscrizione-button">
+								<a href="?iscriviti">ISCRIVITI</a>
+							</div>
 						<?php else: ?>
-							<?php 
-							$is_iscritto = get_user_meta(get_current_user_id(), '_iscrizioni');
-							if($is_iscritto && in_array($post->ID, $is_iscritto)){ ?>
+							<?php
+							if(is_sfida_subscribed($p)){ ?>
 							<div class="iscrizione-button">
 								ISCRITTO
 							</div>
-							<?php } ?>
+							<div class="iscrizione-button">
+								<a href="#" onclick="alert('Funzione non ancora attiva');" >DISISCRIVITI</a>
+							</div>
+							<?php } 
+							if (!$alive) { ?>
+							<div class="iscrizione-button">
+								LA SFIDA NON E' PIU' ATTIVA
+							</div>
+							<?php } else { ?>
+								Devi eseguire il login per poterti iscrivere.
+							<?php }
+							?>
 		 				<?php endif; ?>
 						<!-- END DREAMLAND SPECIFIC -->
 
