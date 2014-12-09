@@ -42,7 +42,7 @@ function richiedi_iscrizione_sfida(){
 	if(is_single() && get_post_type() === 'sfida_event' && isset($_GET['iscriviti'])){
 		
 		if(!is_user_logged_in()){
-			wp_redirect("wp-login.php");
+			wp_die("Solo gli Esploratori o Guide registrati possono iscriversi alle sfide.");
 			exit();
 		}
 
@@ -58,14 +58,14 @@ function richiedi_iscrizione_sfida(){
 		$post = get_post();
 
 		if(!is_sfida_for_me($post)){
-			wp_die("Non puoi partecipare a questa sfida", "Sfida a partecipazione limitata", array('back_link' => True));
+			wp_die("Non puoi partecipare a questa sfida.", "Sfida a partecipazione limitata", array('back_link' => True));
 			return;
 		}
 
 		// controlla se non è già iscritto
 		$is_iscritto = get_user_meta($user, '_iscrizioni');
 		if($is_iscritto && in_array($post->ID, $is_iscritto)){
-			wp_die("Sei già iscritto a questa sfida", "Sfida a partecipazione limitata", array('back_link' => True));
+			wp_die("Sei già iscritto a questa sfida.", "Sfida a partecipazione limitata", array('back_link' => True));
 			exit();
 		}
 
