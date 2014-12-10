@@ -40,7 +40,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 							<?php _e( 'Le sfide pubblicate', 'tempera' ); ?>
 						<?php endif; ?>
 						<?php if(isset($filtro_regione)): ?>
-							<?php _e('per la regione ' . get_nome_regione_by_code($filtro_regione)); ?>
+							<?php _e('per la regione ' . ucwords(get_nome_regione_by_code($filtro_regione))); ?>
 						<?php endif; ?>
 					</h1>
 				</header>
