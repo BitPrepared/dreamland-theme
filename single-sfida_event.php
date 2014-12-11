@@ -94,83 +94,10 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 								</div>
 								<?php
 							}
-
-						$terms = wp_get_object_terms($post->ID, 'tipologiesfide');
-				        $icons = array();
-				        $captions = array();
-				        $has_shield = False;
-				        $has_dragon = False;
-				        $has_castle = False;
-				        $has_pharo = False;
-				        $has_world = False;
-
-				        if($terms && ! is_wp_error($terms)){
-				            foreach ($terms as $term_key => $term_value) {
-				                switch ($term_value->name) {
-				                    case 'Avventura':
-				                    	if($has_castle){
-				                    		break;
-				                    	}
-				                    	$has_castle = True;
-				                        array_push($icons, array(
-				                            'src' => 'http://returntodreamland.agesci.org/blog/wp-content/uploads/2014/10/5.png',
-				                            'caption' => $term_value->name
-				                            )
-				                        );                        
-				                        break;
-				                    case 'Originalita':
-				                    	if($has_pharo){
-				                    		break;
-				                    	}
-				                    	$has_pharo = True;
-				                        array_push($icons, array(
-				                            'src' => 'http://returntodreamland.agesci.org/blog/wp-content/uploads/2014/10/3.png',
-				                            'caption' => $term_value->name
-				                            )
-				                        );
-				                        
-				                        break;
-				                    case 'Grande Impresa':
-				                    	if($has_dragon){
-				                    		break;
-				                    	}
-				                    	$has_dragon = True;
-				                        array_push($icons, array(
-				                            'src' => 'http://returntodreamland.agesci.org/blog/wp-content/uploads/2014/10/1.png',
-				                            'caption' => $term_value->name
-				                            )
-				                        );
-				                        break;
-				                    case 'Traccia nel Mondo':
-				                    	if($has_world){
-				                    		break;
-				                    	}
-				                    	$has_world = True;
-				                        array_push($icons, array(
-				                            'src' => 'http://returntodreamland.agesci.org/blog/wp-content/uploads/2014/10/2.png',
-				                            'caption' => $term_value->name
-				                            )
-				                        );
-				                        break;        
-				                    case 'Grande Sfida':
-				                    case 'Sfida Speciale':
-				                        break;
-				                    default:
-				                        if($has_shield)
-				                            break;
-				                        $has_shield = True;
-				                        array_push($icons, array(
-				                            'src' => 'http://returntodreamland.agesci.org/blog/wp-content/uploads/2014/10/6.png',
-				                            'caption' => 'Altro'
-				                            )
-				                        );
-				                        break;
-				                }
-				            }
-				        }
 				        ?>
 				        <div class="icons">
 				        <?php
+				        $icons = get_icons_for_sfida($post);
 				        foreach ($icons as $icon) {
 				        	$sfida_html = "";
 			                $sfida_html = $sfida_html . '<img alt="'. $icon['caption'] . '" '
