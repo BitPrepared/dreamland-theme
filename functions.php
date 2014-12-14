@@ -95,7 +95,7 @@ function richiedi_iscrizione_sfida(){
 			'sfida_titolo' => get_the_title($post->ID),
 			'sfida_id' => $post->ID,
 			'sfidaspeciale' => is_sfida_speciale($post),
-            'categoria' => get_categorie_sfida($post),
+            'categoria' => get_elenco_categorie_sfida($post),
 			'punteggio_attuale' => ($u_p) ? reset($u_p) : $u_p,
 			'numero_componenti' => ($ncomponenti_p) ? reset($ncomponenti_p) : $ncomponenti_p,
 			'numero_specialita' => ($nspecialita_p) ? reset($nspecialita_p) : $nspecialita_p,
