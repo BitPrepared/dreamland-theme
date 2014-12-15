@@ -143,7 +143,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 									/* Utente collegato e sfida aperta */
 									
 									if(is_sfida_for_me($post)){
-										if(is_sfida_subscribed($p)){
+										if(is_sfida_subscribed($post)){
 											iscritto();
 										} else {
 											bottone_iscriviti();

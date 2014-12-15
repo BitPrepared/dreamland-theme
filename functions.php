@@ -32,21 +32,22 @@ function my_tempera_above_widget() {
 // API: sfida_permalink?iscritto
 // ESEMPIO: http://returntodreamland.agesci.org/blog/sfida_event/viaggio-nel-tempo/?iscritto
 function iscrizione_sfida_completata(){
+	global $current_user;
+
 	if(is_single() && get_post_type() == 'sfida_event' && isset($_GET['iscritto'])){
-		if(!isset($_GET['secret'])){
-			return;
+		_log("Landing su completamento iscrizione sfida " . get_the_ID() . " per utente " . $current_user->ID);
+
+		if(isset($_SESSION['portal']['request']['sfidaid']) 
+			&& $_SESSION['portal']['request']['sfidaid'] == get_the_ID() ){
+			// salva iscrizione completata
+			_log("Completata iscrizione sfida " . get_the_ID() . " per utente " . $current_user->ID);
+			add_user_meta($current_user->ID, '_iscrizioni', get_the_ID(), False);
+			add_user_meta($current_user->ID,'_iscrizione_'.get_the_ID(), StatusIscrizione::Richiesta, True);
+			
 		}
 
-		$s = filter_var( $_GET['secret'], FILTER_STRING);
-
-		if($s !== $sfide_api_secret){
-			return;
-		}
-
-		// salva iscrizione completata
-		add_user_meta(wp_get_current_user_ID(), '_iscrizioni', get_the_ID(), False);
-		add_user_meta(wp_get_current_user_ID(),'_iscrizione_'.get_the_ID(), StatusIscrizione::Richiesta, True);
-
+		$_SESSION['portal'] = array();
+		wp_redirect(post_permalink(get_the_ID()));
 	}
 }
 add_action('wp_head', 'iscrizione_sfida_completata');
@@ -80,9 +81,8 @@ function richiedi_iscrizione_sfida(){
 		}
 
 		// controlla se non è già iscritto
-		$is_iscritto = get_user_meta($user_id, '_iscrizioni');
 
-		if($is_iscritto && in_array($post->ID, $is_iscritto)){
+		if(is_sfida_subscribed($post)){
 			wp_die("Sei già iscritto a questa sfida.", "Sfida a partecipazione limitata", array('back_link' => True));
 			exit();
 		}
