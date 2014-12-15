@@ -52,6 +52,19 @@ function iscrizione_sfida_completata(){
 }
 add_action('wp_head', 'iscrizione_sfida_completata');
 
+function disiscriviti(){
+	global $current_user;
+
+	// Tieni traccia della disiscrizione
+	add_user_meta($current_user->ID, '_iscrizione_annullata', get_the_ID());
+	delete_user_meta($current_user->ID, '_iscrizione_'.get_the_ID());
+	delete_user_meta($current_user->ID, '_iscrizione_'.get_the_ID());
+
+	wp_redirect(post_permalink(get_the_ID()));
+	// todo: chiama portal per l'eliminazione del record
+
+}
+
 // API: sfida_permalink?iscriviti
 // ESEMPIO: http://returntodreamland.agesci.org/blog/sfida_event/viaggio-nel-tempo/?iscriviti
 function richiedi_iscrizione_sfida(){
