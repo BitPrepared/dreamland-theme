@@ -44,7 +44,9 @@ function iscrizione_sfida_completata(){
 			add_user_meta($current_user->ID, '_iscrizioni', get_the_ID(), False);
 			add_user_meta($current_user->ID,'_iscrizione_'.get_the_ID(), StatusIscrizione::Richiesta, True);
 			
-		}
+		} else {
+            _log(var_export($_SESSION['portal']['request']['sfidaid'],true));
+        }
 
 		$_SESSION['portal'] = array();
 		wp_redirect(post_permalink(get_the_ID()));
