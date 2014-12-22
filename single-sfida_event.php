@@ -53,14 +53,29 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 							float:left;
 						}
 
-						.iscrizione-button {
-							border:2px solid red;
+						.stato_sfida, .iscrizione-button {
 							float: left;
-							color: red;
+							color: white;
 							margin: 5px;
-							font-size: 20pt;
-							padding: 5px;
+							font-size: 15pt;
+							padding: 10px;
+							border-radius: 5px;
 						}
+
+						.stato_sfida {
+							background: rgb(66, 184, 221); /* this is a light blue */
+						}
+
+						.iscrizione-button:hover {
+							background: rgb(20, 118, 59);
+						}
+
+						.iscrizione-button {
+							border: 0px;
+							text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+							background: rgb(28, 184, 65); /* this is a green */
+						}
+
 						.locus {
 							color: blue;
 						}
@@ -110,24 +125,27 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 						</div>
 						<?php
 							function sfida_conclusa() { ?>
-							<div class="iscrizione-button">
+							<button type="button" class="btn btn-danger" disabled="disabled">
 								LA SFIDA NON E' PIU' ATTIVA
-							</div>
+							</button>
 							<?php }
 
 							function bottone_iscriviti() {?>
-							<div class="iscrizione-button">
-								<a href="?iscriviti">ISCRIVITI</a>
-							</div>
+							<a href="?iscriviti"><button type="button" class="btn btn-success">
+								ISCRIVITI
+							</button></a>
 							<?php }
 
 							function iscritto() {?>
-							<div class="iscrizione-button">
+							<button type="button" class="btn btn-success" disabled="disabled">
 								ISCRITTO
-							</div>
-							<div class="iscrizione-button">
-								<a href="#" onclick="alert('Funzione non ancora attiva');" >DISISCRIVITI</a>
-							</div>
+							</button>
+							<button type="button" class="btn btn-danger" onclick="alert('Funzione non ancora attiva');">
+								ANNULLA
+							</button>
+							<button type="button" class="btn btn-primary" onclick="alert('Funzione non ancora attiva');">
+								COMPLETA
+							</button>
 
 							<?php }
 

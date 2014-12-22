@@ -2,6 +2,16 @@
 
 // require_once("regioni_e_zone/regione_zone_utils.php");
 
+function add_bootstrap_style()
+{
+    // Register the style like this for a theme:
+    wp_register_style( 'bootstrap-style', get_template_directory_uri() . '/styles/bootstrap.min.css' );
+
+    // For either a plugin or a theme, you can then enqueue the style:
+    wp_enqueue_style( 'bootstrap-style' );
+}
+add_action( 'wp_enqueue_scripts', 'add_bootstrap_style' );
+
 if(!function_exists('_log')){
   function _log( $message ) {
     if( WP_DEBUG === true ){
@@ -57,10 +67,7 @@ add_action('wp_head', 'iscrizione_sfida_completata');
 function disiscriviti(){
 	global $current_user;
 
-	// Tieni traccia della disiscrizione
-	add_user_meta($current_user->ID, '_iscrizione_annullata', get_the_ID());
-	delete_user_meta($current_user->ID, '_iscrizione_'.get_the_ID());
-	delete_user_meta($current_user->ID, '_iscrizione_'.get_the_ID());
+	rdt_disiscrivi_utente_da_sfida(get_the_ID(), $current_user->ID);
 
 	wp_redirect(post_permalink(get_the_ID()));
 	// todo: chiama portal per l'eliminazione del record
