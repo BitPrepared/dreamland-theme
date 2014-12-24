@@ -136,16 +136,31 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 							</button></a>
 							<?php }
 
-							function iscritto() {?>
+							function iscritto($post) {?>
 							<button type="button" class="btn btn-success" disabled="disabled">
 								ISCRITTO
 							</button>
-							<button type="button" class="btn btn-danger" onclick="alert('Funzione non ancora attiva');">
+							<script>
+
+								function deleteSfida(id){
+									jQuery.ajax({
+										url: 'http://dreamland.sigmalab.local/portal/api/sfide/iscrizione/'+id,
+										type: 'DELETE',
+										success: function(result) {
+											// Do something with the result
+											window.location=window.location+'?disiscrivi';
+										}
+									});
+								}
+
+							</script>
+							<button type="button" class="btn btn-danger" onclick="javascript:deleteSfida(<?=$post->ID?>)">
 								ANNULLA
 							</button>
-							<button type="button" class="btn btn-primary" onclick="alert('Funzione non ancora attiva');">
+							<button type="button" class="btn btn-primary" onclick="javascript:window.location='http://dreamland.sigmalab.local/portal/#/sfide/chiudi?id=<?=$post->ID?>'">
 								COMPLETA
 							</button>
+
 
 							<?php }
 
@@ -162,7 +177,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 									
 									if(is_sfida_for_me($post)){
 										if(is_sfida_subscribed($post)){
-											iscritto();
+											iscritto($post);
 										} else {
 											bottone_iscriviti();
 										}

@@ -53,24 +53,34 @@ function iscrizione_sfida_completata(){
 			_log("Completata iscrizione sfida " . get_the_ID() . " per utente " . $current_user->ID);
 			add_user_meta($current_user->ID, '_iscrizioni', get_the_ID(), False);
 			add_user_meta($current_user->ID,'_iscrizione_'.get_the_ID(), StatusIscrizione::Richiesta, True);
-			
+			$_SESSION['portal'] = array();
 		} else {
-            _log(var_export($_SESSION['portal']['request']['sfidaid'],true));
+            _log(var_export($_SESSION,true));
         }
 
-		$_SESSION['portal'] = array();
 		wp_redirect(post_permalink(get_the_ID()));
 	}
 }
 add_action('wp_head', 'iscrizione_sfida_completata');
 
+function diiscrizione_sfida(){
+	global $current_user;
+
+	if(is_single() && get_post_type() == 'sfida_event' && isset($_GET['disiscrivi'])){
+		_log("Landing su disiscrizione sfida " . get_the_ID() . " per utente " . $current_user->ID);
+
+		disiscriviti();
+	}
+}
+add_action('wp_head', 'diiscrizione_sfida');
+
 function disiscriviti(){
 	global $current_user;
 
-	rdt_disiscrivi_utente_da_sfida(get_the_ID(), $current_user->ID);
+	rtd_disiscrivi_utente_da_sfida(get_the_ID(), $current_user->ID);
 
 	wp_redirect(post_permalink(get_the_ID()));
-	// todo: chiama portal per l'eliminazione del record
+	// FIXME: chiama portal per l'eliminazione del record DELETE http://dreamland.sigmalab.local/portal/api/sfide/iscrizione/'+idsfida
 
 }
 
