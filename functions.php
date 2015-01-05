@@ -53,14 +53,14 @@ function completa_sfida(){
 			// salva iscrizione completata
 			_log("Completata la sfida " . get_the_ID() . " per utente " . $current_user->ID);
 			
-			$newpost = rtd_completa_sfida(get_the_ID(), $current_user->ID);
+			$newpost = rtd_completa_sfida(get_post(get_the_ID()), $current_user->ID);
 
 			$_SESSION['portal'] = array();
 
 			_log('Redirect al nuovo post ' . $newpost . ', utente ' . $current_user->ID 
 				. "( " . get_edit_post_link($newpost) . " )");
 
-			wp_redirect(get_edit_post_link($newpost));
+			wp_redirect(get_edit_post_link($newpost, 'do_not_encode_ampersand'));
 			exit;
 		} else {
             _log(var_export($_SESSION,true));
