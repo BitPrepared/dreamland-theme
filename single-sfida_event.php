@@ -174,6 +174,12 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 								Devi eseguire il login per poterti iscrivere.
 							<?php }
 
+							function completata($post){ ?>
+							<button type="button" class="btn btn-primary" disabled="disabled">
+								SFIDA COMPLETATA
+							</button>
+							<?php }
+
 							if(is_sfida_alive($post)) {
 
 								if(!is_user_logged_in()) {
@@ -183,7 +189,11 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 									
 									if(is_sfida_for_me($post)){
 										if(is_sfida_subscribed($post)){
-											iscritto($post);
+											if(is_sfida_completed($post)){
+												completata($post);
+											} else {
+												iscritto($post);	
+											}
 										} else {
 											bottone_iscriviti();
 										}
