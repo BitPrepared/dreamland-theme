@@ -39,6 +39,37 @@ function my_tempera_above_widget() {
 	</ul>
 <?php } }
 
+// API: sfida_permalink?completa
+// ESEMPIO: http://returntodreamland.agesci.org/blog/sfida_event/viaggio-nel-tempo/?completa
+function completa_sfida(){
+	global $current_user;
+	$post = get_post();
+
+	if(is_single() && get_post_type() == 'sfida_event' && isset($_GET['completa'])){
+		_log("Landing su completamento della sfida " . get_the_ID() . " per utente " . $current_user->ID);
+
+		if(isset($_SESSION['portal']['request']['sfidaid']) 
+			&& $_SESSION['portal']['request']['sfidaid'] == get_the_ID() ){
+			// salva iscrizione completata
+			_log("Completata la sfida " . get_the_ID() . " per utente " . $current_user->ID);
+			
+			$newpost = rtd_completa_sfida(get_the_ID(), $current_user->ID);
+
+			$_SESSION['portal'] = array();
+
+			_log('Redirect al nuovo post ' . $newpost . ', utente ' . $current_user->ID 
+				. "( " . get_edit_post_link($newpost) . " )");
+			wp_redirect(get_edit_post_link($newpost));
+
+		} else {
+            _log(var_export($_SESSION,true));
+        }
+
+		wp_redirect(post_permalink(get_the_ID()));
+	}
+}
+add_action('wp_head', 'iscrizione_sfida_completata');
+
 // API: sfida_permalink?iscritto
 // ESEMPIO: http://returntodreamland.agesci.org/blog/sfida_event/viaggio-nel-tempo/?iscritto
 function iscrizione_sfida_completata(){
@@ -86,6 +117,8 @@ function disiscriviti(){
 // API: sfida_permalink?iscriviti
 // ESEMPIO: http://returntodreamland.agesci.org/blog/sfida_event/viaggio-nel-tempo/?iscriviti
 function richiedi_iscrizione_sfida(){
+	global $current_user;
+
 	if(is_single() && get_post_type() === 'sfida_event' && isset($_GET['iscriviti'])){
 		
 		if(!is_user_logged_in()){
@@ -93,14 +126,12 @@ function richiedi_iscrizione_sfida(){
 			exit();
 		}
 
-		$user_id = get_current_user_id();
+		$user_id = $current_user->ID;
 		
 		if($user_id == 0){
 			wp_redirect("wp-login.php");
 			exit();
 		}
-
-		$user = new WP_User($user_id);
 
 		// login_portal( $user->user_login, $user );
 		
@@ -136,7 +167,7 @@ function richiedi_iscrizione_sfida(){
 			'numero_brevetti' => ($nbrevetti_p) ? reset($nbrevetti_p) : $nbrevetti_p
 		);
 
-		_log('Richiesta iscrizione per evento '.$post->ID.' da parte dello user '.$user->ID);
+		_log('Richiesta iscrizione per evento '.$post->ID.' da parte dello user '.$current_user->ID);
 
 		$url = site_url('../portal/api/sfide/iscrizione/'. $post->ID);
 
