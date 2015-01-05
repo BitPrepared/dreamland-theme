@@ -143,6 +143,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 							<script>
 
 								function deleteSfida(id){
+									if(!confirm("Sei sicuro di voler annullare l'iscrizione alla sfida <?php echo $post->title; ?>")) return;
 									jQuery.ajax({
 										url: '<?php echo get_site_url(); ?>/../portal/api/sfide/iscrizione/'+id,
 										type: 'DELETE',
@@ -155,9 +156,9 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 
 							</script>
 							<button type="button" class="btn btn-danger" onclick="javascript:deleteSfida(<?=$post->ID?>);">
-								ANNULLA
+								ANNULLA ISCRIZIONE
 							</button>
-							<button type="button" class="btn btn-primary" onclick="javascript:window.location='<?php echo get_site_url(); ?>/../portal/#/sfide/chiudi?id=<?=$post->ID?>'">
+							<button type="button" class="btn btn-primary" onclick="confirm('Sei sicuro di voler completare la sfida <?php echo $post->name; ?>') && javascript:window.location='<?php echo get_site_url(); ?>/../portal/#/sfide/chiudi?id=<?=$post->ID?>'">
 								COMPLETA
 							</button>
 
