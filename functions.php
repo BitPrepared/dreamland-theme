@@ -77,11 +77,6 @@ add_action('wp_head', 'diiscrizione_sfida');
 function disiscriviti(){
 	global $current_user;
 
-    if(!is_sfida_subscribed(get_the_ID())){
-        _log('Disiscrizione a sfida non iscritta: utente ' . $current_user->ID . ' sfida:' . get_the_ID());
-        return;
-    }
-
     rtd_disiscrivi_utente_da_sfida(get_the_ID(), $current_user->ID);
 
 	wp_redirect(post_permalink(get_the_ID()));
