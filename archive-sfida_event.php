@@ -55,7 +55,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 						 */
 						if(isset($filtro_regione)){
 							$p_r = get_post_meta($post->ID, '_regione');
-							if($filtro_regione === $p_r[0]){
+							if($filtro_regione === $p_r[0] && is_sfida_alive($post)){
 						 		get_template_part( 'content/content', get_post_format() );
 						 	}
 						} else {
