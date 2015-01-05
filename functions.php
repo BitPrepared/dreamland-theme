@@ -70,7 +70,7 @@ function completa_sfida(){
 		exit;
 	}
 }
-add_action('wp_head', 'iscrizione_sfida_completata');
+add_action('wp_head', 'completa_sfida');
 
 // API: sfida_permalink?iscritto
 // ESEMPIO: http://returntodreamland.agesci.org/blog/sfida_event/viaggio-nel-tempo/?iscritto
