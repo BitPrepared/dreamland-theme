@@ -144,7 +144,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 
 								function deleteSfida(id){
 									jQuery.ajax({
-										url: 'http://dreamland.sigmalab.local/portal/api/sfide/iscrizione/'+id,
+										url: '<?php echo get_site_url(); ?>../portal/api/sfide/iscrizione/'+id,
 										type: 'DELETE',
 										success: function(result) {
 											// Do something with the result
@@ -154,10 +154,10 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 								}
 
 							</script>
-							<button type="button" class="btn btn-danger" onclick="javascript:deleteSfida(<?=$post->ID?>)">
+							<button type="button" class="btn btn-danger" onclick="javascript:deleteSfida(<?=$post->ID?>);">
 								ANNULLA
 							</button>
-							<button type="button" class="btn btn-primary" onclick="javascript:window.location='http://dreamland.sigmalab.local/portal/#/sfide/chiudi?id=<?=$post->ID?>'">
+							<button type="button" class="btn btn-primary" onclick="javascript:window.location='<?php echo get_site_url(); ?>../portal/#/sfide/chiudi?id=<?=$post->ID?>'">
 								COMPLETA
 							</button>
 
