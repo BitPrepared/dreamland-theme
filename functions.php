@@ -80,8 +80,8 @@ function iscrizione_sfida_completata(){
 	if(is_single() && get_post_type() == 'sfida_event' && isset($_GET['iscritto'])){
 		_log("Landing su completamento iscrizione sfida " . get_the_ID() . " per utente " . $current_user->ID);
 
-		if(isset($_SESSION['wordpress']['user_id']) 
-			&& $_SESSION['wordpress']['user_id'] == $current_user->ID() ){
+		if(isset($_SESSION['portal']['request']['sfidaid']) 
+			&& $_SESSION['portal']['request']['sfidaid'] == get_the_ID()){
 			// salva iscrizione completata
 			_log("Completata iscrizione sfida " . get_the_ID() . " per utente " . $current_user->ID);
 			add_user_meta($current_user->ID, '_iscrizioni', get_the_ID(), False);
