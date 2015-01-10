@@ -164,7 +164,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 							<script>
                            function completeSfida(){
                             if(!confirm('Sei sicuro di voler completare la sfida \"<?= $post->post_title ?>\"?')) { return; }
-                             window.location='<?php echo get_site_url(); ?>/../portal/#/sfide/chiudi?id=<?=$post->ID?>';
+                             window.location='<?php echo get_site_url(); ?>/../portal/home#/sfide/chiudi?id=<?=$post->ID?>';
                             }
                             </script>
 
