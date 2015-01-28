@@ -20,8 +20,9 @@ foreach ($options as $key => $value) {
 			<h2 class="entry-title">
 				<a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'tempera' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
 			</h2>
-			<?php 
-				if (!is_sfida_alive(get_post())) { ?>
+			<?php
+				$cur_p = get_post();
+				if ( $cur_p->post_type == 'sfida_event' &&  !is_sfida_alive(get_post())) { ?>
 				<button class="btn btn-danger btn-xs" style="float:left;" disabled="disabled" >SFIDA NON PIU' ATTIVA</button>
 				<?php }
 				cryout_post_title_hook(); 

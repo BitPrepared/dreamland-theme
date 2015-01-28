@@ -52,8 +52,18 @@ function completa_sfida(){
 			&& $_SESSION['wordpress']['user_id'] == $current_user->ID ){
 			// salva iscrizione completata
 			_log("Completata la sfida " . get_the_ID() . " per utente " . $current_user->ID);
-			
-			$newpost = rtd_completa_sfida(get_post(get_the_ID()), $current_user->ID);
+
+			$get_is_sfida = filter_input(INPUT_GET, 'sfida', FILTER_SANITIZE_STRING);
+
+			if($get_is_sfida == 'true'){
+				$is_sfida = true;
+			} else {
+				$is_sfida = false;
+			}
+
+			$tiposfida = filter_input(INPUT_GET, 'tipo', FILTER_SANITIZE_STRING);
+
+			$newpost = rtd_completa_sfida(get_post(get_the_ID()), $current_user->ID, $is_sfida, $tiposfida);
 
 			$_SESSION['portal'] = array();
 

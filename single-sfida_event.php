@@ -85,10 +85,16 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 							<div class="limite-sfida" >SFIDA APERTA A TUTTI!</div>
 						<?php else : ?>
 							<div class="limite-sfida" >Sfida limitata alla regione 
-							<span class="locus"><?php echo(get_nome_regione_by_code($r)); ?></span></div>
+							<span class="locus"><?php
+								$n_r = get_nome_regione_by_code($r);
+								echo(($n_r) ? $n_r : $r );
+							?></span></div>
 							<?php if ($z != 'A1' && $z != '-- TUTTE LE ZONE --') : ?>
 								<div class="limite-sfida" >e alla zona 
-								<span class="locus"><?php echo(get_nome_zona_by_code($z)); ?></span>
+								<span class="locus"><?php
+									$n_z = get_nome_zona_by_code($z);
+									echo(($n_z) ? $n_z : $z);
+								?></span>
 								</div>
 							<?php endif; ?>
 						<?php endif; ?>
