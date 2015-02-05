@@ -51,25 +51,34 @@ function completa_sfida(){
 		if(isset($_SESSION['wordpress']['user_id']) 
 			&& $_SESSION['wordpress']['user_id'] == $current_user->ID ){
 			// salva iscrizione completata
-			_log("Completata la sfida " . get_the_ID() . " per utente " . $current_user->ID);
 
 			$get_is_sfida = filter_input(INPUT_GET, 'sfida', FILTER_SANITIZE_STRING);
+			$tiposfida = filter_input(INPUT_GET, 'tipo', FILTER_SANITIZE_STRING);
+			$superata = filter_input(INPUT_GET, 'superata', FILTER_SANITIZE_STRING);
+
+			if($get_is_sfida === null || $tiposfida === null || $superata === null){
+				_log("Completamento sfida (u:". $current_user->ID ." s:" . $post->ID ."): argomenti della richiesta mancanti: " . $get_is_sfida.", ". $tiposfida .", ". $superata );
+				wp_die("Si è verificato un'errore nel completamento della sfida.".
+					" Per favore contatta lo staff di Return to Dreamland.".
+					"(Parametri mancanti nella richiesta)", "Errore tecnico");
+			}
 
 			$is_sfida = $get_is_sfida === 'true';
-			$tiposfida = filter_input(INPUT_GET, 'tipo', FILTER_SANITIZE_STRING);
 
-			$newpost = rtd_completa_sfida(get_post(get_the_ID()), $current_user->ID, $is_sfida, $tiposfida);
+			$newpost = rtd_completa_sfida(get_post(get_the_ID()), $current_user->ID, $is_sfida, $tiposfida, $superata);
+
+			_log("Completata s: " . get_the_ID() . " u:" . $current_user->ID . " racc:" . $newpost . " superata:" . $superata);
 
 			$_SESSION['portal'] = array();
 
-			_log('Redirect al nuovo post ' . $newpost . ', utente ' . $current_user->ID 
-				. "( " . get_edit_post_link($newpost) . " )");
+			if(! $superata === 'true'){
+				wp_redirect(get_admin_url());
+				exit();
+			}
 
 			wp_redirect(get_edit_post_link($newpost, 'do_not_encode_ampersand'));
 			exit;
-		} else {
-            _log(var_export($_SESSION,true));
-        }
+		}
 
 		wp_redirect(post_permalink(get_the_ID()));
 		exit;
