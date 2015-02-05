@@ -55,12 +55,7 @@ function completa_sfida(){
 
 			$get_is_sfida = filter_input(INPUT_GET, 'sfida', FILTER_SANITIZE_STRING);
 
-			if($get_is_sfida == 'true'){
-				$is_sfida = true;
-			} else {
-				$is_sfida = false;
-			}
-
+			$is_sfida = $get_is_sfida === 'true';
 			$tiposfida = filter_input(INPUT_GET, 'tipo', FILTER_SANITIZE_STRING);
 
 			$newpost = rtd_completa_sfida(get_post(get_the_ID()), $current_user->ID, $is_sfida, $tiposfida);
