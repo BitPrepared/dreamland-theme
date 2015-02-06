@@ -54,7 +54,7 @@ function completa_sfida(){
 
 			$get_is_sfida = filter_input(INPUT_GET, 'sfida', FILTER_SANITIZE_STRING);
 			$tiposfida = filter_input(INPUT_GET, 'tipo', FILTER_SANITIZE_STRING);
-			$superata = filter_input(INPUT_GET, 'superata', FILTER_SANITIZE_STRING);
+			$superata = filter_input(INPUT_GET, 'successo', FILTER_SANITIZE_STRING);
 
 			if($get_is_sfida === null || $tiposfida === null || $superata === null){
 				_log("Completamento sfida (u:". $current_user->ID ." s:" . $post->ID ."): argomenti della richiesta mancanti: " . $get_is_sfida.", ". $tiposfida .", ". $superata );
