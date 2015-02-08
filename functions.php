@@ -99,7 +99,7 @@ function iscrizione_sfida_completata(){
 			// salva iscrizione completata
 			_log("Completata iscrizione sfida " . get_the_ID() . " per utente " . $current_user->ID);
 			add_user_meta($current_user->ID, '_iscrizioni', get_the_ID(), False);
-			add_user_meta($current_user->ID,'_iscrizione_'.get_the_ID(), StatusIscrizione::Richiesta, True);
+			add_user_meta($current_user->ID,'_iscrizione_'.get_the_ID(), StatusIscrizione::RICHIESTA, True);
 			$_SESSION['portal'] = array();
 		} else {
             _log(var_export($_SESSION,true));
