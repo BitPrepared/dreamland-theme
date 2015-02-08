@@ -71,8 +71,8 @@ function completa_sfida(){
 
 			$_SESSION['portal'] = array();
 
-			if(! $superata === 'true'){
-				wp_redirect(get_admin_url());
+			if( $superata != 'true'){
+				wp_redirect( admin_url() );
 				exit();
 			}
 
