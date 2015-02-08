@@ -50,7 +50,14 @@ function completa_sfida(){
 
 		if(isset($_SESSION['wordpress']['user_id']) 
 			&& $_SESSION['wordpress']['user_id'] == $current_user->ID ){
-			// salva iscrizione completata
+
+			$status = get_iscrizione_status($post, $current_user->ID);
+			if($status != StatusIscrizione::RICHIESTA){
+				wp_die('La sfida che stai concludendo risulta "'. $status . '"'.
+					'. Per poterla completare la sfida deve essere nello stato "Attiva". '.
+					'Se pensi che sia un errore per favore contatta lo staff di Return to Dreamland.<br>\n'.
+					'<a href="'. get_admin_url() .'">Torna alla bacheca.', 'Qualcosa non va..');
+			}
 
 			$get_is_sfida = filter_input(INPUT_GET, 'sfida', FILTER_SANITIZE_STRING);
 			$tiposfida = filter_input(INPUT_GET, 'tipo', FILTER_SANITIZE_STRING);
@@ -161,7 +168,7 @@ function richiedi_iscrizione_sfida(){
 		// controlla se non è già iscritto
 
 		if(is_sfida_subscribed($post)){
-			wp_die("Sei già iscritto a questa sfida.", "Sfida a partecipazione limitata", array('back_link' => True));
+			wp_die("Sei già iscritto a questa sfida.", "Qualcosa non va...", array('back_link' => True));
 			exit();
 		}
 
