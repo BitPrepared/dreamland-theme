@@ -169,7 +169,7 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 							</button>
 							<script>
                            function completeSfida(){
-                            if(!confirm('Sei sicuro di voler completare la sfida \"<?= $post->post_title ?>\"?')) { return; }
+                            if(!confirm('Sei sicuro di voler completare la sfida "<?= str_replace("'", "\\'", $post->post_title); ?>"?')) { return; }
                              window.location='<?php echo get_site_url(); ?>/../portal/home#/sfide/chiudi?id=<?=$post->ID?>';
                             }
                             </script>
