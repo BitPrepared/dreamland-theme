@@ -185,29 +185,26 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 								SFIDA COMPLETATA
 							</button>
 							<?php }
-
-							if(is_sfida_alive($post)) {
-
-								if(!is_user_logged_in()) {
-									richiedi_login();
+							if(!is_user_logged_in()) {
+								richiedi_login();
+							} else {
+								/* Utente collegato */
+								if(is_sfida_subscribed($post)){
+									if(is_sfida_completed($post)){
+										completata($post);
+									} else {
+										iscritto($post);
+									}
 								} else {
-									/* Utente collegato e sfida aperta */
-									
-									if(is_sfida_for_me($post)){
-										if(is_sfida_subscribed($post)){
-											if(is_sfida_completed($post)){
-												completata($post);
-											} else {
-												iscritto($post);	
-											}
-										} else {
+									if(is_sfida_alive($post)) {
+										if(is_sfida_for_me($post)){
 											bottone_iscriviti();
 										}
+									} else {
+										/* Sfida conclusa */
+										sfida_conclusa();
 									}
 								}
-							} else {
-								/* Sfida conclusa */
-								sfida_conclusa();
 							}
 							?>
 						<!-- END DREAMLAND SPECIFIC -->
