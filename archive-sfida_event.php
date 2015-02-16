@@ -20,6 +20,12 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 
 		<section id="container" class="<?php echo tempera_get_layout_class(); ?>">
 			<div id="content" role="main">
+				<?php
+				if (is_post_type_archive('sfida_review')) {
+					echo "<p>Scrivi qui per cercare fra i racconti.. (es: nome sq, regione, titolo della sfida)</p>";
+					get_search_form();
+				}
+				?>
 			<?php cryout_before_content_hook(); ?>
 			
 			<?php if ( have_posts() ) : ?>
