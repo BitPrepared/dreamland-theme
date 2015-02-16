@@ -18,7 +18,7 @@ get_header(); ?>
 			<div id="content" role="main">
 			<?php cryout_before_content_hook(); ?>
 
-			<p>Scrivi qui per cercare fra i racconti.. (es: nome sq, regione, titolo della sfida)</p>
+			<p>Scrivi qui per cercare fra i racconti:</p>
 			<?php get_search_form();  ?>
 			<?php if ( have_posts() ) : ?>
 
