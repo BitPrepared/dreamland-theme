@@ -19,8 +19,16 @@ get_header(); ?>
 			<?php cryout_before_content_hook(); ?>
 
 			<p>Scrivi qui per cercare fra i racconti:</p>
-			<?php get_search_form();  ?>
-			<?php if ( have_posts() ) : ?>
+			<?php get_search_form();
+			if (! is_user_logged_in()): ?>
+			<div class="bs-callout bs-callout-danger">
+				<h4>Solo per veri Dreamers!</h4>
+				Devi essere autenticato per poter leggere il contenuto dei racconti! Se non hai effettuato l'accesso visita
+				la <a href="<?php wp_login_url() ?>">pagina di accesso</a>.
+			</div>
+			<?php
+			endif;
+			if ( have_posts() ) : ?>
 
 				<header class="page-header">
 					<h1 class="page-title">
