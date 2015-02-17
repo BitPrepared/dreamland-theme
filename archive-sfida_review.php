@@ -22,7 +22,7 @@ get_header(); ?>
 			<?php get_search_form();
 			if (! is_user_logged_in()): ?>
 			<div class="bs-callout bs-callout-danger">
-				<h3>Attenzione</h3>
+				<h4>Attenzione</h4>
 				Devi essere autenticato per poter leggere il contenuto dei racconti! Se non hai effettuato l'accesso visita
 				la <a href="<?php echo wp_login_url(); ?>">pagina di login</a>.
 			</div>
