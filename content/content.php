@@ -37,7 +37,7 @@ foreach ($options as $key => $value) {
 			
 						<?php if ($tempera_excerptarchive != "Full Post" ){ ?>
 						<div class="entry-summary">
-						<?php tempera_set_featured_thumb(); ?>
+						<?php if ( 'sfida_review' != get_post_type() ) tempera_set_featured_thumb(); ?>
 						<?php the_excerpt(); ?>
 						</div><!-- .entry-summary -->
 						<?php } else { ?>
