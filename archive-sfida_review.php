@@ -19,7 +19,9 @@ get_header(); ?>
 			<?php cryout_before_content_hook(); ?>
 
 			<p>Scrivi qui per cercare fra i racconti:</p>
-			<?php get_search_form();
+			<input type="text">
+			<?php
+
 			if (! is_user_logged_in()): ?>
 			<div class="bs-callout bs-callout-danger">
 				<h4>Attenzione</h4>
@@ -32,15 +34,7 @@ get_header(); ?>
 
 				<header class="page-header">
 					<h1 class="page-title">
-						<?php if ( is_day() ) : ?>
-							<?php printf( __( 'Daily Archives: %s', 'tempera' ), '<span>' . get_the_date() . '</span>' ); ?>
-						<?php elseif ( is_month() ) : ?>
-							<?php printf( __( 'Monthly Archives: %s', 'tempera' ), '<span>' . get_the_date( _x( 'F Y', 'monthly archives date format', 'tempera' ) ) . '</span>' ); ?>
-						<?php elseif ( is_year() ) : ?>
-							<?php printf( __( 'Yearly Archives: %s', 'tempera' ), '<span>' . get_the_date( _x( 'Y', 'yearly archives date format', 'tempera' ) ) . '</span>' ); ?>
-						<?php else : ?>
-							<?php _e( 'Blog Archives', 'tempera' ); ?>
-						<?php endif; ?>
+						Gli ultimi racconti approvati...
 					</h1>
 				</header>
 
