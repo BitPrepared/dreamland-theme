@@ -23,8 +23,13 @@ get_header(); ?>
 					Cerca fra i racconti
 				</h1>
 			</header>
-				<p>Scrivi il testo che vuoi cercare nel titolo dei racconti (Ad esempio il nome di una sfida).</p>
-				<p>Usa i <b>tag</b> per cercare nei racconti: puoi cer</p>
+				<p>Scrivi il testo che vuoi cercare nel titolo dei racconti (Per esempio il nome di una sfida).</p>
+				<div class="bs-callaout bs-callout-info">
+					<h4>Usa i <b>tag</b> per cercare nei racconti</h4>
+					Puoi cercare i nomi delle squadriglie, dei gruppi, delle zone e delle regioni utilizzando i tag.
+					Insieme alla tua ricerca inserisci '#' (premi i tasti 'Alt' e 'à' contemporaneamente) e poi il nome del tag.
+					Per esempio puoi cercare: 'pinocchio #roma-1' oppure '#toscana'.
+				</div>
 				<form method="get" id="searchform" action="<?= site_url(); ?>">
 					<input type="text" value="Cerca" name="s" id="s"
 					   onblur="if (this.value == '') {this.value = 'Cerca';}" onfocus="if (this.value == 'Cerca') {this.value = '';}">
