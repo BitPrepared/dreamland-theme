@@ -18,8 +18,55 @@ get_header(); ?>
 			<div id="content" role="main">
 			<?php cryout_before_content_hook(); ?>
 
-			<p>Scrivi qui per cercare fra i racconti:</p>
-			<input type="text">
+			<header class="page-header">
+				<h1 class="page-title">
+					Cerca fra i racconti
+				</h1>
+			</header>
+				<p>Scrivi il testo che vuoi cercare nel titolo dei racconti (Ad esempio il nome di una sfida).</p>
+				<p>Usa i <b>tag</b> per cercare nei racconti: puoi cer</p>
+				<form method="get" id="searchform" action="<?= site_url(); ?>">
+					<input type="text" value="Cerca" name="s" id="s"
+					   onblur="if (this.value == '') {this.value = 'Cerca';}" onfocus="if (this.value == 'Cerca') {this.value = '';}">
+					<input type="hidden" name="post_type" value="sfida_review">
+					<input type="hidden" name="tag" id="tags-in">
+				</form>
+				<script>
+					function get_tags (from) {
+						var t = jQuery(from).val();
+						var regexp = /#[^\s]*[\s]?/g;
+						var ret = []; var tmparr;
+						jQuery(from).val(t.replace(regexp, ""));
+						while((tmparr = regexp.exec(t)) !== null) {
+							ret.push(tmparr[0]);
+						}
+						return ret;
+					}
+
+					function mytrim(s){
+						return s.trim().replace('#','');
+					}
+
+					jQuery(document).ready(function(){
+						jQuery('#searchform').submit(function(){
+							var tags = get_tags('#s');
+							jQuery('#tags-in').val(tags.map(mytrim).join(','));
+						});
+					});
+				</script>
+
+			<header class="page-header">
+				<h1 class="page-title">
+					I tag più usati
+				</h1>
+			</header>
+				<?php wp_tag_cloud(); ?>
+
+			<header class="page-header">
+				<h1 class="page-title">
+					Gli ultimi racconti condivisi
+				</h1>
+			</header>
 			<?php
 
 			if (! is_user_logged_in()): ?>
@@ -31,12 +78,6 @@ get_header(); ?>
 			<?php
 			endif;
 			if ( have_posts() ) : ?>
-
-				<header class="page-header">
-					<h1 class="page-title">
-						Gli ultimi racconti approvati...
-					</h1>
-				</header>
 
 				<?php /* Start the Loop */ ?>
 				<?php while ( have_posts() ) : the_post(); ?>
