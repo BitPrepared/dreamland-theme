@@ -24,7 +24,7 @@ get_header(); ?>
 				</h1>
 			</header>
 				<p>Scrivi il testo che vuoi cercare nel titolo dei racconti (Per esempio il nome di una sfida).</p>
-				<div class="bs-callaout bs-callout-info">
+				<div class="bs-callout bs-callout-info">
 					<h4>Usa i <b>tag</b> per cercare nei racconti</h4>
 					Puoi cercare i nomi delle squadriglie, dei gruppi, delle zone e delle regioni utilizzando i tag.
 					Insieme alla tua ricerca inserisci '#' (premi i tasti 'Alt' e 'à' contemporaneamente) e poi il nome del tag.
