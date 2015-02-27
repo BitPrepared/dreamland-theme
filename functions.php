@@ -157,14 +157,21 @@ function richiedi_iscrizione_sfida(){
 		}
 
 		// login_portal( $user->user_login, $user );
-		
+
+		// BYPASS_CHECKS_PSWD is defined in wp-config.php
+		$bypass_checks = (filter_input(INPUT_GET, 'pswd', FILTER_SANITIZE_STRING) === BYPASS_CHECKS_PSWD);
+
 		$post = get_post();
 
-		if(!is_sfida_for_me($post)){
+		if(!is_sfida_for_me($post) && ! $bypass_checks){
 			wp_die("Non puoi partecipare a questa sfida.", "Sfida a partecipazione limitata", array('back_link' => True));
-			return;
+			exit();
 		}
 
+		if(!is_sfida_alive($post) && ! $bypass_checks){
+			wp_die("Questa sfida non è più attiva.", "Sfida scaduta", array('back_link' => True));
+			exit();
+		}
 		// controlla se non è già iscritto
 
 		if(is_sfida_subscribed($post)){
