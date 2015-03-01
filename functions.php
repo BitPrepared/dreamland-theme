@@ -119,10 +119,13 @@ add_action('wp_head', 'iscrizione_sfida_completata');
 
 function diiscrizione_sfida(){
 	global $current_user;
+	$post = get_post();
 
 	if(is_single() && get_post_type() == 'sfida_event' && isset($_GET['disiscrivi'])){
 		_log("Landing su disiscrizione sfida " . get_the_ID() . " per utente " . $current_user->ID);
-
+		if(!is_sfida_subscribed($post) || get_iscrizione_status($post) != StatusIscrizione::RICHIESTA){
+			wp_die("Non sei iscritto alla sfida o l'hai già completata", "Errore", array('back_link' => true));
+		}
 		disiscriviti();
 	}
 }
