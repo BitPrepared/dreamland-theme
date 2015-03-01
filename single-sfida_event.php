@@ -207,6 +207,11 @@ require_once("regioni_e_zone/regioni_zone_utils.php");
 								}
 							}
 							?>
+						<?php if(is_user_logged_in()):
+							$tag = get_term_by('name',rtd_tagify($post->post_title), 'post_tag');
+							?>
+						<a href="<?= get_tag_link($tag->term_id) ?>">Leggi i racconti delle squadriglie che hanno partecipato alla sfida</a>
+						<?php endif; ?>
 						<!-- END DREAMLAND SPECIFIC -->
 
 					<div class="entry-content">
