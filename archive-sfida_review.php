@@ -18,7 +18,14 @@ get_header(); ?>
 			<div id="content" role="main">
 			<?php cryout_before_content_hook(); ?>
 
-			<header class="page-header">
+            <?php if (! is_user_logged_in()): ?>
+            <div class="bs-callout bs-callout-danger">
+            <h4>Attenzione</h4>
+            Devi essere autenticato per poter leggere il contenuto dei racconti! Se non hai effettuato l'accesso visita
+            la <a href="<?php echo wp_login_url(); ?>">pagina di login</a>.
+            </div>
+            <?php endif; ?>
+            <header class="page-header">
 				<h1 class="page-title">
 					Cerca fra i racconti
 				</h1>
@@ -72,17 +79,8 @@ get_header(); ?>
 					Gli ultimi racconti condivisi
 				</h1>
 			</header>
-			<?php
 
-			if (! is_user_logged_in()): ?>
-			<div class="bs-callout bs-callout-danger">
-				<h4>Attenzione</h4>
-				Devi essere autenticato per poter leggere il contenuto dei racconti! Se non hai effettuato l'accesso visita
-				la <a href="<?php echo wp_login_url(); ?>">pagina di login</a>.
-			</div>
-			<?php
-			endif;
-			if ( have_posts() ) : ?>
+			<?php if ( have_posts() ) : ?>
 
 				<?php /* Start the Loop */ ?>
 				<?php while ( have_posts() ) : the_post(); ?>
